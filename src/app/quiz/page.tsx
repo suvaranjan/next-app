@@ -10,6 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  CardDescription,
 } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -21,7 +22,21 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Clock, AlertCircle, CheckCircle, XCircle } from "lucide-react";
+import {
+  Clock,
+  AlertCircle,
+  CheckCircle,
+  XCircle,
+  ChevronLeft,
+  ChevronRight,
+  Send,
+  RotateCcw,
+  FileText,
+  BookOpen,
+  Award,
+  Timer,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type Question = {
   id: number;
@@ -37,10 +52,13 @@ export default function QuizPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-background p-4 flex items-center justify-center">
-          <Card className="w-full max-w-2xl p-8">
-            <div className="text-center">
-              <p className="text-lg">Loading quiz...</p>
+        <div className="min-h-screen bg-gradient-to-b from-background to-muted/30 p-4 flex items-center justify-center">
+          <Card className="w-full max-w-2xl p-8 shadow-lg border-t-4 border-t-primary">
+            <div className="text-center space-y-4">
+              <div className="flex justify-center">
+                <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
+              </div>
+              <p className="text-lg font-medium">Loading quiz...</p>
             </div>
           </Card>
         </div>
@@ -55,7 +73,7 @@ function QuizContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Get quiz parameters from URL .. Okay
+  // Get quiz parameters from URL
   const subject = searchParams.get("subject") || "All";
   const questionCount = Number.parseInt(
     searchParams.get("questionCount") || "20"
@@ -69,6 +87,7 @@ function QuizContent() {
   const [quizEnded, setQuizEnded] = useState(false);
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
   const [showAnswersDrawer, setShowAnswersDrawer] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Filter and prepare questions
   useEffect(() => {
@@ -154,7 +173,12 @@ function QuizContent() {
 
   // Submit quiz
   const handleSubmitQuiz = () => {
-    setQuizEnded(true);
+    setIsSubmitting(true);
+    // Simulate submission delay
+    setTimeout(() => {
+      setQuizEnded(true);
+      setIsSubmitting(false);
+    }, 1000);
   };
 
   // Count answered questions
@@ -183,59 +207,134 @@ function QuizContent() {
     return "";
   };
 
+  // Get score color based on percentage
+  const getScoreColor = (percentage: number) => {
+    if (percentage >= 80) return "text-green-600";
+    if (percentage >= 60) return "text-amber-600";
+    return "text-red-600";
+  };
+
   // Results view
   if (quizEnded) {
     const results = calculateResults();
 
     return (
-      <div className="min-h-screen bg-background p-4 flex items-center justify-center">
-        <Card className="w-full max-w-2xl">
-          <CardHeader>
-            <CardTitle className="text-center text-2xl">Test Result</CardTitle>
+      <div className="min-h-screen bg-gradient-to-b from-background to-muted/30 p-4 flex items-center justify-center">
+        <Card className="w-full max-w-2xl shadow-lg border-t-4 border-t-primary animate-fadeIn">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-center text-2xl flex items-center justify-center gap-2">
+              <Award className="h-6 w-6 text-primary" />
+              Test Results
+            </CardTitle>
+            <CardDescription className="text-center">
+              {results.percentage >= 70
+                ? "Great job! You've done well on this quiz."
+                : "Keep practicing! You'll improve with time."}
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="text-center space-y-2">
-              <p className="text-4xl font-bold">
-                {results.correct} / {results.total}
-              </p>
-              <p className="text-lg text-muted-foreground">
-                You answered {results.correct} out of {results.total} questions
-                correctly
+          <CardContent className="space-y-8">
+            <div className="text-center space-y-2 py-4">
+              <div className="inline-flex items-center justify-center w-32 h-32 rounded-full border-8 border-primary/20">
+                <p
+                  className={cn(
+                    "text-4xl font-bold",
+                    getScoreColor(results.percentage)
+                  )}
+                >
+                  {results.percentage}%
+                </p>
+              </div>
+              <p className="text-xl font-medium mt-4">
+                {results.correct} / {results.total} correct answers
               </p>
             </div>
 
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span>Score Percentage</span>
-                <span className="font-medium">{results.percentage}%</span>
+                <span>Score</span>
+                <span
+                  className={cn(
+                    "font-medium",
+                    getScoreColor(results.percentage)
+                  )}
+                >
+                  {results.percentage}%
+                </span>
               </div>
-              <Progress value={results.percentage} className="h-3" />
+              <Progress
+                value={results.percentage}
+                className="h-3 rounded-full"
+                // indicatorClassName={cn(
+                //   "rounded-full",
+                //   results.percentage >= 80
+                //     ? "bg-green-500"
+                //     : results.percentage >= 60
+                //     ? "bg-amber-500"
+                //     : "bg-red-500"
+                // )}
+              />
             </div>
 
-            <div className="rounded-lg border p-4 bg-muted/50">
-              <h3 className="font-medium mb-2">Subject: {subject}</h3>
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <div>Total Questions: {results.total}</div>
-                <div>Correct Answers: {results.correct}</div>
-                <div>Wrong Answers: {results.total - results.correct}</div>
-                <div>
-                  Time Taken: {timerMinutes - Math.ceil(timeLeft / 60)} min
+            <div className="rounded-lg border p-6 bg-muted/30 shadow-sm">
+              <h3 className="font-medium mb-4 flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-primary" />
+                Quiz Summary
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex items-center gap-2 text-sm">
+                  <Badge variant="outline" className="px-2 py-1">
+                    Subject
+                  </Badge>
+                  <span>{subject}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Badge variant="outline" className="px-2 py-1">
+                    Questions
+                  </Badge>
+                  <span>{results.total}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Badge
+                    variant="outline"
+                    className="px-2 py-1 bg-green-300 dark:bg-green-700"
+                  >
+                    Correct
+                  </Badge>
+                  <span>{results.correct}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Badge
+                    variant="outline"
+                    className="px-2 py-1 bg-red-300  dark:bg-red-700"
+                  >
+                    Wrong
+                  </Badge>
+                  <span>{results.total - results.correct}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm md:col-span-2">
+                  <Badge variant="outline" className="px-2 py-1">
+                    <Timer className="h-3 w-3 mr-1" />
+                    Time Taken
+                  </Badge>
+                  <span>{timerMinutes - Math.ceil(timeLeft / 60)} minutes</span>
                 </div>
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex gap-4">
+          <CardFooter className="flex flex-col sm:flex-row gap-4 pt-2">
             <Button
               variant="outline"
-              className="w-1/2"
+              className="w-full sm:w-1/2 gap-2"
               onClick={() => router.push("/test")}
             >
+              <RotateCcw className="h-4 w-4" />
               New Test
             </Button>
             <Button
-              className="w-1/2"
+              className="w-full sm:w-1/2 gap-2"
               onClick={() => setShowAnswersDrawer(true)}
             >
+              <FileText className="h-4 w-4" />
               Review Answers
             </Button>
           </CardFooter>
@@ -243,47 +342,81 @@ function QuizContent() {
 
         {/* Answers Drawer */}
         <Sheet open={showAnswersDrawer} onOpenChange={setShowAnswersDrawer}>
-          <SheetContent side="bottom" className="h-[80vh] overflow-y-auto">
-            <SheetHeader className="top-0 bg-background z-10 pb-4">
-              <SheetTitle className="text-center">
-                All Questions and Answers
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] overflow-y-auto rounded-t-xl"
+          >
+            <SheetHeader className="sticky top-0 bg-background z-10 pb-4 pt-2">
+              <SheetTitle className="text-center flex items-center justify-center gap-2">
+                <FileText className="h-5 w-5 text-primary" />
+                Questions & Answers
               </SheetTitle>
             </SheetHeader>
 
-            <div className="space-y-8 pb-16">
+            <div className="space-y-6 pb-16">
               {filteredQuestions.map((question, qIndex) => (
-                <div key={question.id} className="border rounded-lg p-4">
-                  <div className="flex flex-col items-start mb-2 gap-2">
-                    <h3 className="font-medium text-lg">
-                      {qIndex + 1}. {question.question}
-                    </h3>
-                    {userAnswers[question.id] ? (
-                      userAnswers[question.id] === question.answer ? (
-                        <Badge className="bg-green-500">
-                          <CheckCircle className="h-3 w-3 mr-1" /> Correct
-                        </Badge>
-                      ) : (
-                        <Badge className="bg-red-500">
-                          <XCircle className="h-3 w-3 mr-1" /> Incorrect
-                        </Badge>
-                      )
-                    ) : (
+                <div
+                  key={question.id}
+                  className="border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div className="flex flex-col items-start mb-3 gap-2">
+                    <div className="flex items-center gap-2 w-full">
                       <Badge
                         variant="outline"
-                        className="border-yellow-500 text-yellow-700"
+                        className="h-6 min-w-6 flex items-center justify-center rounded-full p-0"
                       >
-                        <AlertCircle className="h-3 w-3 mr-1" /> Not Attempted
+                        {qIndex + 1}
                       </Badge>
-                    )}
+                      <h3 className="font-medium text-lg flex-1">
+                        {question.question}
+                      </h3>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      {userAnswers[question.id] ? (
+                        userAnswers[question.id] === question.answer ? (
+                          <Badge className="bg-green-500 hover:bg-green-600">
+                            <CheckCircle className="h-3 w-3 mr-1" /> Correct
+                          </Badge>
+                        ) : (
+                          <Badge className="bg-red-500 hover:bg-red-600">
+                            <XCircle className="h-3 w-3 mr-1" /> Incorrect
+                          </Badge>
+                        )
+                      ) : (
+                        <Badge
+                          variant="outline"
+                          className="border-yellow-500 text-yellow-700"
+                        >
+                          <AlertCircle className="h-3 w-3 mr-1" /> Not Attempted
+                        </Badge>
+                      )}
+
+                      <Badge variant="outline" className="bg-muted/50">
+                        {question.topic}
+                      </Badge>
+
+                      <Badge variant="outline" className="bg-muted/50">
+                        {question.difficulty}
+                      </Badge>
+                    </div>
                   </div>
+
                   <div className="space-y-2 mt-3">
                     {question.options.map((option, index) => (
                       <div
                         key={index}
-                        className={`flex items-center space-x-2 rounded-lg border p-3 ${getOptionClass(
-                          question,
-                          option
-                        )}`}
+                        className={cn(
+                          "flex items-center space-x-2 rounded-lg border p-3 transition-all",
+                          getOptionClass(question, option),
+                          option === question.answer
+                            ? "border-l-4 border-l-green-500"
+                            : "",
+                          option === userAnswers[question.id] &&
+                            option !== question.answer
+                            ? "border-l-4 border-l-red-500"
+                            : ""
+                        )}
                       >
                         <div className="flex-1">
                           {option}
@@ -314,10 +447,13 @@ function QuizContent() {
   // Loading state
   if (!currentQuestion) {
     return (
-      <div className="min-h-screen bg-background p-4 flex items-center justify-center">
-        <Card className="w-full max-w-2xl p-8">
-          <div className="text-center">
-            <p className="text-lg">Loading questions...</p>
+      <div className="min-h-screen bg-gradient-to-b from-background to-muted/30 p-4 flex items-center justify-center">
+        <Card className="w-full max-w-2xl p-8 shadow-lg border-t-4 border-t-primary">
+          <div className="text-center space-y-4">
+            <div className="flex justify-center">
+              <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
+            </div>
+            <p className="text-lg font-medium">Loading questions...</p>
           </div>
         </Card>
       </div>
@@ -326,52 +462,85 @@ function QuizContent() {
 
   // Quiz view
   return (
-    <div className="min-h-screen bg-background p-4 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/30 p-4 flex flex-col">
       <div className="max-w-4xl w-full mx-auto flex-1 flex flex-col">
         {/* Header with timer and progress */}
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center gap-2">
-            <Clock className="h-5 w-5 text-muted-foreground" />
-            <span
-              className={`font-mono text-lg ${
-                timeLeft < 60 ? "text-red-500 animate-pulse" : ""
-              }`}
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <div className="flex items-center gap-3 bg-background/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm">
+            <div
+              className={cn(
+                "flex items-center gap-2 rounded-full px-3 py-1",
+                timeLeft < 60
+                  ? "bg-red-100 text-red-700 animate-pulse"
+                  : "bg-muted"
+              )}
             >
-              {formatTime(timeLeft)}
-            </span>
+              <Clock className="h-4 w-4" />
+              <span className="font-mono text-lg font-medium">
+                {formatTime(timeLeft)}
+              </span>
+            </div>
+
+            <div className="h-4 w-px bg-muted-foreground/30"></div>
+
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="bg-primary/10">
+                {subject}
+              </Badge>
+            </div>
           </div>
-          <div className="text-sm text-muted-foreground">
-            Questions : {currentQuestionIndex + 1} / {filteredQuestions.length}
+
+          <div className="flex items-center gap-3 bg-background/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm">
+            <span className="text-sm font-medium">
+              Question {currentQuestionIndex + 1} of {filteredQuestions.length}
+            </span>
+
+            <div className="h-4 w-px bg-muted-foreground/30"></div>
+
+            <span className="text-sm">
+              Answered:{" "}
+              <span className="font-medium text-primary">{answeredCount}</span>
+            </span>
           </div>
         </div>
 
         {/* Progress bar */}
-        <Progress
-          value={(answeredCount / filteredQuestions.length) * 100}
-          className="w-full h-2 mb-2"
-        />
+        <div className="mb-6">
+          <div className="flex justify-between text-xs text-muted-foreground mb-1 px-1">
+            <span>Progress</span>
+            <span>
+              {Math.round((answeredCount / filteredQuestions.length) * 100)}%
+            </span>
+          </div>
+          <Progress
+            value={(answeredCount / filteredQuestions.length) * 100}
+            className="w-full h-2 rounded-full"
+            // indicatorClassName="rounded-full"
+          />
+        </div>
 
         {/* Question card */}
-        <Card className="flex-1 flex flex-col">
-          <CardHeader>
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium text-muted-foreground">
-                Subject : {currentQuestion.type}
-              </span>
-              <div className="text-sm">
-                Answered : <span className="font-medium">{answeredCount}</span>{" "}
-                / {filteredQuestions.length}
-              </div>
-              <span className="text-sm font-medium text-muted-foreground">
-                Topic : {currentQuestion.topic}
-              </span>
+        <Card className="flex-1 flex flex-col shadow-lg border-t-4 border-t-primary animate-fadeIn">
+          <CardHeader className="pb-2">
+            <div className="flex flex-wrap justify-between items-center gap-2 mb-3">
+              <Badge variant="outline" className="bg-primary/10">
+                {currentQuestion.type}
+              </Badge>
+
+              <Badge variant="outline" className="bg-muted">
+                {currentQuestion.difficulty}
+              </Badge>
+
+              <Badge variant="outline" className="bg-muted">
+                {currentQuestion.topic}
+              </Badge>
             </div>
-            <CardTitle className="text-xl">
+            <CardTitle className="text-xl leading-relaxed">
               {currentQuestionIndex + 1}. {currentQuestion.question}
             </CardTitle>
           </CardHeader>
 
-          <CardContent className="flex-1">
+          <CardContent className="flex-1 pt-4">
             <RadioGroup
               value={userAnswers[currentQuestion.id] || ""}
               onValueChange={handleAnswerSelect}
@@ -380,17 +549,22 @@ function QuizContent() {
               {currentQuestion.options.map((option, index) => (
                 <div
                   key={index}
-                  className={`flex items-center space-x-2 rounded-lg border p-4 cursor-pointer transition-colors ${
+                  className={cn(
+                    "flex items-center space-x-3 rounded-lg border p-4 cursor-pointer transition-all hover:border-primary/50",
                     userAnswers[currentQuestion.id] === option
-                      ? "bg-primary/10 border-primary"
-                      : ""
-                  }`}
+                      ? "bg-primary/10 border-primary shadow-sm"
+                      : "hover:bg-muted/50"
+                  )}
                   onClick={() => handleAnswerSelect(option)}
                 >
-                  <RadioGroupItem value={option} id={`option-${index}`} />
+                  <RadioGroupItem
+                    value={option}
+                    id={`option-${index}`}
+                    className="text-primary"
+                  />
                   <Label
                     htmlFor={`option-${index}`}
-                    className="flex-1 cursor-pointer"
+                    className="flex-1 cursor-pointer font-medium"
                   >
                     {option}
                   </Label>
@@ -405,18 +579,61 @@ function QuizContent() {
                 variant="outline"
                 onClick={goToPrevQuestion}
                 disabled={currentQuestionIndex === 0}
+                className="gap-1"
               >
-                Previous
+                <ChevronLeft className="h-4 w-4" />
+                Prev
               </Button>
 
               <Button
                 onClick={handleSubmitQuiz}
-                disabled={answeredCount === 0}
-                className="bg-green-600 hover:bg-green-700"
+                disabled={answeredCount === 0 || isSubmitting}
+                className="bg-green-600 hover:bg-green-700 gap-1"
               >
-                Submit Quiz
+                {isSubmitting ? (
+                  <>
+                    <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-4 w-4" />
+                    Submit
+                  </>
+                )}
               </Button>
-              <Button onClick={goToNextQuestion}>Next</Button>
+
+              <Button onClick={goToNextQuestion} className="gap-1">
+                Next
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+
+            {/* Question navigation */}
+            <div className="pt-2">
+              <div className="text-xs text-muted-foreground mb-2">
+                Question Navigation:
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {filteredQuestions.map((_, index) => (
+                  <Button
+                    key={index}
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      "w-8 h-8 p-0 rounded-md",
+                      index === currentQuestionIndex &&
+                        "bg-primary text-primary-foreground hover:bg-primary/90",
+                      userAnswers[filteredQuestions[index].id] &&
+                        index !== currentQuestionIndex &&
+                        "bg-primary/20"
+                    )}
+                    onClick={() => setCurrentQuestionIndex(index)}
+                  >
+                    {index + 1}
+                  </Button>
+                ))}
+              </div>
             </div>
           </CardFooter>
         </Card>
