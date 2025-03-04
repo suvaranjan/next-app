@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { questions } from "@/data/questions";
+import { syllabus } from "@/data/syllabus";
 import {
   Card,
   CardContent,
@@ -27,13 +27,16 @@ import Link from "next/link";
 export default function TestPage() {
   const router = useRouter();
   const [subject, setSubject] = useState("All");
+  const [topic, setTopic] = useState("All");
   const [questionCount, setQuestionCount] = useState(50);
   const [timer, setTimer] = useState(50);
 
+  const selectedSubject = syllabus.find((s) => s.subject === subject);
+  const topics = selectedSubject ? selectedSubject.topic : [];
+
   const handleStartTest = () => {
-    // Navigate to quiz page with parameters
     router.push(
-      `/quiz?subject=${subject}&questionCount=${questionCount}&timer=${timer}`
+      `/quiz?subject=${subject}&topic=${topic}&questionCount=${questionCount}&timer=${timer}`
     );
   };
 
@@ -43,18 +46,13 @@ export default function TestPage() {
       <Card className="w-full max-w-md">
         <CardHeader>
           <Link href="/" className="flex justify-between items-center">
-            {/* Back Button - Aligned to the left-center */}
             <Button variant="ghost" size="sm" className="self-center">
               <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
-
-            {/* Card Title and Description - Centered */}
             <div className="flex-1 text-center">
               <CardTitle className="mt-2 mb-2">Test Settings</CardTitle>
               <CardDescription>Configure your test</CardDescription>
             </div>
-
-            {/* Spacer to balance the flex layout */}
             <div className="w-20"></div>
           </Link>
         </CardHeader>
@@ -65,21 +63,44 @@ export default function TestPage() {
         <CardContent className="space-y-8 p-6">
           <div className="space-y-3">
             <Label htmlFor="subject">Choose your subject</Label>
-            <Select value={subject} onValueChange={setSubject}>
+            <Select
+              value={subject}
+              onValueChange={(value) => {
+                setSubject(value);
+                setTopic("All");
+              }}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="विषय चुनें" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="All">All</SelectItem>
-                <SelectItem value="उपन्यास">उपन्यास</SelectItem>
-                <SelectItem value="काव्य">काव्य</SelectItem>
-                <SelectItem value="कहानी">कहानी</SelectItem>
-                <SelectItem value="निबंध">निबंध</SelectItem>
-                <SelectItem value="नाटक">नाटक</SelectItem>
-                <SelectItem value="संस्मरण/रेखाचित्र">
-                  संस्मरण/रेखाचित्र
-                </SelectItem>
-                <SelectItem value="पद्य (दोहे)">पद्य (दोहे)</SelectItem>
+                {syllabus.map((s) => (
+                  <SelectItem key={s.subject} value={s.subject}>
+                    {s.subject}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-3">
+            <Label htmlFor="topic">Choose your topic</Label>
+            <Select
+              value={topic}
+              onValueChange={setTopic}
+              disabled={subject === "All"}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="विषय चुनें" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="All">All</SelectItem>
+                {topics.map((t) => (
+                  <SelectItem key={t.slug} value={t.name}>
+                    {t.name}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -92,7 +113,7 @@ export default function TestPage() {
             <Slider
               id="questions"
               min={1}
-              max={questions.length}
+              max={100}
               step={1}
               value={[questionCount]}
               onValueChange={(value) => setQuestionCount(value[0])}
@@ -100,7 +121,7 @@ export default function TestPage() {
             />
             <div className="flex justify-between text-xs text-muted-foreground">
               <span>1</span>
-              <span>{questions.length}</span>
+              <span>100</span>
             </div>
           </div>
 
@@ -112,7 +133,7 @@ export default function TestPage() {
             <Slider
               id="timer"
               min={1}
-              max={questions.length / 2}
+              max={50}
               step={1}
               value={[timer]}
               onValueChange={(value) => setTimer(value[0])}
@@ -120,7 +141,7 @@ export default function TestPage() {
             />
             <div className="flex justify-between text-xs text-muted-foreground">
               <span>1 min</span>
-              <span>{questions.length / 2} min</span>
+              <span>50 min</span>
             </div>
           </div>
         </CardContent>

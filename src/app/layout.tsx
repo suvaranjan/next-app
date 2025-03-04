@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Palanquin } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/others/navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+const palanquin = Palanquin({
+  weight: ["100", "200", "300", "400", "500", "700"],
+  style: ["normal"],
+  subsets: ["latin"],
+  variable: "--font-palanquin",
 });
 
 const geistMono = Geist_Mono({
@@ -26,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${palanquin.variable}antialiased`}
       >
         <Navbar />
         {children}

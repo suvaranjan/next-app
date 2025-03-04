@@ -1,0 +1,50 @@
+{
+  "cacheItemsMap": {
+    "hello.mdx": {
+      "document": {
+        "title": "Hello world",
+        "date": "2000-05-19T18:30:00.000Z",
+        "body": {
+          "raw": "\r\n# Why is the Sky Blue?\r\n\r\nThe sky appears blue because of a phenomenon called **Rayleigh scattering**. This occurs when sunlight interacts with the Earth's atmosphere.\r\n\r\n## How It Works\r\n\r\n- Sunlight, which appears white, is actually made up of different colors of light, each with different wavelengths.\r\n- When sunlight enters the Earth's atmosphere, it collides with gases and particles.\r\n- Shorter wavelengths of light (blue and violet) scatter more than longer wavelengths (red and yellow).\r\n- Our eyes are more sensitive to blue light than violet, and the upper atmosphere absorbs much of the violet light, making the sky appear blue to us.\r\n\r\n## Why Does the Sky Change Color at Sunset?\r\n\r\nDuring sunrise and sunset, the sun is lower in the sky, meaning sunlight has to pass through more of the atmosphere. This causes:\r\n\r\n- More scattering of shorter wavelengths (blue and violet), leaving behind longer wavelengths (red and orange).\r\n- This is why we see beautiful red, orange, and pink hues during sunrise and sunset.\r\n\r\nColons can be used to align columns.\r\n\r\n| Tables        |      Are      |  Cool |\r\n| ------------- | :-----------: | ----: |\r\n| col 3 is      | right-aligned | $1600 |\r\n| col 2 is      |   centered    |   $12 |\r\n| zebra stripes |   are neat    |    $1 |\r\n\r\nThere must be at least 3 dashes separating each header cell.\r\nThe outer pipes (|) are optional, and you don't need to make the\r\nraw Markdown line up prettily. You can also use inline Markdown.\r\n\r\n| Markdown | Less      | Pretty     |\r\n| -------- | --------- | ---------- |\r\n| _Still_  | `renders` | **nicely** |\r\n| 1        | 2         | 3          |\r\n",
+          "code": "var Component=(()=>{var u=Object.create;var l=Object.defineProperty;var g=Object.getOwnPropertyDescriptor;var p=Object.getOwnPropertyNames;var m=Object.getPrototypeOf,w=Object.prototype.hasOwnProperty;var f=(t,e)=>()=>(e||t((e={exports:{}}).exports,e),e.exports),y=(t,e)=>{for(var r in e)l(t,r,{get:e[r],enumerable:!0})},h=(t,e,r,i)=>{if(e&&typeof e==\"object\"||typeof e==\"function\")for(let s of p(e))!w.call(t,s)&&s!==r&&l(t,s,{get:()=>e[s],enumerable:!(i=g(e,s))||i.enumerable});return t};var b=(t,e,r)=>(r=t!=null?u(m(t)):{},h(e||!t||!t.__esModule?l(r,\"default\",{value:t,enumerable:!0}):r,t)),k=t=>h(l({},\"__esModule\",{value:!0}),t);var o=f((T,a)=>{a.exports=_jsx_runtime});var x={};y(x,{default:()=>c,frontmatter:()=>v});var n=b(o()),v={title:\"Hello world\",date:\"2000-05-20\"};function d(t){let e={code:\"code\",em:\"em\",h1:\"h1\",h2:\"h2\",li:\"li\",p:\"p\",strong:\"strong\",ul:\"ul\",...t.components};return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsx)(e.h1,{children:\"Why is the Sky Blue?\"}),`\n`,(0,n.jsxs)(e.p,{children:[\"The sky appears blue because of a phenomenon called \",(0,n.jsx)(e.strong,{children:\"Rayleigh scattering\"}),\". This occurs when sunlight interacts with the Earth's atmosphere.\"]}),`\n`,(0,n.jsx)(e.h2,{children:\"How It Works\"}),`\n`,(0,n.jsxs)(e.ul,{children:[`\n`,(0,n.jsx)(e.li,{children:\"Sunlight, which appears white, is actually made up of different colors of light, each with different wavelengths.\"}),`\n`,(0,n.jsx)(e.li,{children:\"When sunlight enters the Earth's atmosphere, it collides with gases and particles.\"}),`\n`,(0,n.jsx)(e.li,{children:\"Shorter wavelengths of light (blue and violet) scatter more than longer wavelengths (red and yellow).\"}),`\n`,(0,n.jsx)(e.li,{children:\"Our eyes are more sensitive to blue light than violet, and the upper atmosphere absorbs much of the violet light, making the sky appear blue to us.\"}),`\n`]}),`\n`,(0,n.jsx)(e.h2,{children:\"Why Does the Sky Change Color at Sunset?\"}),`\n`,(0,n.jsx)(e.p,{children:\"During sunrise and sunset, the sun is lower in the sky, meaning sunlight has to pass through more of the atmosphere. This causes:\"}),`\n`,(0,n.jsxs)(e.ul,{children:[`\n`,(0,n.jsx)(e.li,{children:\"More scattering of shorter wavelengths (blue and violet), leaving behind longer wavelengths (red and orange).\"}),`\n`,(0,n.jsx)(e.li,{children:\"This is why we see beautiful red, orange, and pink hues during sunrise and sunset.\"}),`\n`]}),`\n`,(0,n.jsx)(e.p,{children:\"Colons can be used to align columns.\"}),`\n`,(0,n.jsx)(e.p,{children:`| Tables        |      Are      |  Cool |\\r\n| ------------- | :-----------: | ----: |\\r\n| col 3 is      | right-aligned | $1600 |\\r\n| col 2 is      |   centered    |   $12 |\\r\n| zebra stripes |   are neat    |    $1 |`}),`\n`,(0,n.jsx)(e.p,{children:`There must be at least 3 dashes separating each header cell.\\r\nThe outer pipes (|) are optional, and you don't need to make the\\r\nraw Markdown line up prettily. You can also use inline Markdown.`}),`\n`,(0,n.jsxs)(e.p,{children:[`| Markdown | Less      | Pretty     |\\r\n| -------- | --------- | ---------- |\\r\n| `,(0,n.jsx)(e.em,{children:\"Still\"}),\"  | \",(0,n.jsx)(e.code,{children:\"renders\"}),\" | \",(0,n.jsx)(e.strong,{children:\"nicely\"}),` |\\r\n| 1        | 2         | 3          |`]})]})}function c(t={}){let{wrapper:e}=t.components||{};return e?(0,n.jsx)(e,{...t,children:(0,n.jsx)(d,{...t})}):d(t)}return k(x);})();\n;return Component;"
+        },
+        "_id": "hello.mdx",
+        "_raw": {
+          "sourceFilePath": "hello.mdx",
+          "sourceFileName": "hello.mdx",
+          "sourceFileDir": ".",
+          "contentType": "mdx",
+          "flattenedPath": "hello"
+        },
+        "type": "Post",
+        "slug": "/posts/hello"
+      },
+      "documentHash": "1740981400132",
+      "hasWarnings": false,
+      "documentTypeName": "Post"
+    },
+    "world.mdx": {
+      "document": {
+        "title": "Hii Guyss",
+        "date": "2000-05-19T18:30:00.000Z",
+        "body": {
+          "raw": "\r\n# Heading1\r\n\r\n## Heading2\r\n\r\n### Heading3\r\n",
+          "code": "var Component=(()=>{var x=Object.create;var s=Object.defineProperty;var u=Object.getOwnPropertyDescriptor;var l=Object.getOwnPropertyNames;var _=Object.getPrototypeOf,f=Object.prototype.hasOwnProperty;var g=(n,t)=>()=>(t||n((t={exports:{}}).exports,t),t.exports),j=(n,t)=>{for(var r in t)s(n,r,{get:t[r],enumerable:!0})},a=(n,t,r,i)=>{if(t&&typeof t==\"object\"||typeof t==\"function\")for(let o of l(t))!f.call(n,o)&&o!==r&&s(n,o,{get:()=>t[o],enumerable:!(i=u(t,o))||i.enumerable});return n};var H=(n,t,r)=>(r=n!=null?x(_(n)):{},a(t||!n||!n.__esModule?s(r,\"default\",{value:n,enumerable:!0}):r,n)),p=n=>a(s({},\"__esModule\",{value:!0}),n);var h=g((D,c)=>{c.exports=_jsx_runtime});var y={};j(y,{default:()=>m,frontmatter:()=>M});var e=H(h()),M={title:\"Hii Guyss\",date:\"2000-05-20\"};function d(n){let t={h1:\"h1\",h2:\"h2\",h3:\"h3\",...n.components};return(0,e.jsxs)(e.Fragment,{children:[(0,e.jsx)(t.h1,{children:\"Heading1\"}),`\n`,(0,e.jsx)(t.h2,{children:\"Heading2\"}),`\n`,(0,e.jsx)(t.h3,{children:\"Heading3\"})]})}function m(n={}){let{wrapper:t}=n.components||{};return t?(0,e.jsx)(t,{...n,children:(0,e.jsx)(d,{...n})}):d(n)}return p(y);})();\n;return Component;"
+        },
+        "_id": "world.mdx",
+        "_raw": {
+          "sourceFilePath": "world.mdx",
+          "sourceFileName": "world.mdx",
+          "sourceFileDir": ".",
+          "contentType": "mdx",
+          "flattenedPath": "world"
+        },
+        "type": "Post",
+        "slug": "/posts/world"
+      },
+      "documentHash": "1740980904357",
+      "hasWarnings": false,
+      "documentTypeName": "Post"
+    }
+  }
+}

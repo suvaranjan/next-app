@@ -1,0 +1,19 @@
+{
+  "title": "test",
+  "keyword": "test for mdx",
+  "date": "2025-03-03T18:30:00.000Z",
+  "body": {
+    "raw": "\r\n## Test\r\n\r\n'क्रोध' आचार्य रामचंद्र शुक्ल द्वारा लिखित एक प्रभावशाली निबंध है, जिसमें उन्होंने क्रोध के विभिन्न रूपों, उसके प्रभावों और नियंत्रण के उपायों पर विचार किया है। यह निबंध\r\n",
+    "code": "var Component=(()=>{var l=Object.create;var a=Object.defineProperty;var x=Object.getOwnPropertyDescriptor;var p=Object.getOwnPropertyNames;var f=Object.getPrototypeOf,u=Object.prototype.hasOwnProperty;var _=(n,t)=>()=>(t||n((t={exports:{}}).exports,t),t.exports),j=(n,t)=>{for(var s in t)a(n,s,{get:t[s],enumerable:!0})},c=(n,t,s,o)=>{if(t&&typeof t==\"object\"||typeof t==\"function\")for(let r of p(t))!u.call(n,r)&&r!==s&&a(n,r,{get:()=>t[r],enumerable:!(o=x(t,r))||o.enumerable});return n};var M=(n,t,s)=>(s=n!=null?l(f(n)):{},c(t||!n||!n.__esModule?a(s,\"default\",{value:n,enumerable:!0}):s,n)),g=n=>c(a({},\"__esModule\",{value:!0}),n);var m=_((C,i)=>{i.exports=_jsx_runtime});var w={};j(w,{default:()=>h,frontmatter:()=>k});var e=M(m()),k={title:\"test\",keyword:\"test for mdx\",date:\"2025-03-04\"};function d(n){let t={a:\"a\",h2:\"h2\",p:\"p\",span:\"span\",...n.components};return(0,e.jsxs)(e.Fragment,{children:[(0,e.jsxs)(t.h2,{id:\"test\",children:[(0,e.jsx)(t.a,{className:\"anchor\",href:\"#test\",children:(0,e.jsx)(t.span,{className:\"icon icon-link\"})}),\"Test\"]}),`\n`,(0,e.jsx)(t.p,{children:\"'\\u0915\\u094D\\u0930\\u094B\\u0927' \\u0906\\u091A\\u093E\\u0930\\u094D\\u092F \\u0930\\u093E\\u092E\\u091A\\u0902\\u0926\\u094D\\u0930 \\u0936\\u0941\\u0915\\u094D\\u0932 \\u0926\\u094D\\u0935\\u093E\\u0930\\u093E \\u0932\\u093F\\u0916\\u093F\\u0924 \\u090F\\u0915 \\u092A\\u094D\\u0930\\u092D\\u093E\\u0935\\u0936\\u093E\\u0932\\u0940 \\u0928\\u093F\\u092C\\u0902\\u0927 \\u0939\\u0948, \\u091C\\u093F\\u0938\\u092E\\u0947\\u0902 \\u0909\\u0928\\u094D\\u0939\\u094B\\u0902\\u0928\\u0947 \\u0915\\u094D\\u0930\\u094B\\u0927 \\u0915\\u0947 \\u0935\\u093F\\u092D\\u093F\\u0928\\u094D\\u0928 \\u0930\\u0942\\u092A\\u094B\\u0902, \\u0909\\u0938\\u0915\\u0947 \\u092A\\u094D\\u0930\\u092D\\u093E\\u0935\\u094B\\u0902 \\u0914\\u0930 \\u0928\\u093F\\u092F\\u0902\\u0924\\u094D\\u0930\\u0923 \\u0915\\u0947 \\u0909\\u092A\\u093E\\u092F\\u094B\\u0902 \\u092A\\u0930 \\u0935\\u093F\\u091A\\u093E\\u0930 \\u0915\\u093F\\u092F\\u093E \\u0939\\u0948\\u0964 \\u092F\\u0939 \\u0928\\u093F\\u092C\\u0902\\u0927\"})]})}function h(n={}){let{wrapper:t}=n.components||{};return t?(0,e.jsx)(t,{...n,children:(0,e.jsx)(d,{...n})}):d(n)}return g(w);})();\n;return Component;"
+  },
+  "_id": "test.mdx",
+  "_raw": {
+    "sourceFilePath": "test.mdx",
+    "sourceFileName": "test.mdx",
+    "sourceFileDir": ".",
+    "contentType": "mdx",
+    "flattenedPath": "test"
+  },
+  "type": "Post",
+  "slug": "/posts/test"
+}

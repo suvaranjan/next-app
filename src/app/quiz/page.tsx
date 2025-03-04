@@ -196,12 +196,12 @@ function QuizContent() {
 
     if (option === correctAnswer) {
       // Correct answer
-      return "bg-green-100 border-green-500";
+      return "bg-green-100 dark:bg-green-500 border-green-500";
     }
 
     if (option === userAnswer && userAnswer !== correctAnswer) {
       // Wrong answer selected
-      return "bg-red-100 border-red-500";
+      return "bg-red-100 dark:bg-red-500 border-red-500";
     }
 
     return "";
@@ -410,24 +410,24 @@ function QuizContent() {
                           "flex items-center space-x-2 rounded-lg border p-3 transition-all",
                           getOptionClass(question, option),
                           option === question.answer
-                            ? "border-l-4 border-l-green-500"
+                            ? "border-l-4 border-l-green-500 dark:border-l-green-700 "
                             : "",
                           option === userAnswers[question.id] &&
                             option !== question.answer
-                            ? "border-l-4 border-l-red-500"
+                            ? "border-l-4 border-l-red-500 dark:border-l-red-700"
                             : ""
                         )}
                       >
                         <div className="flex-1">
                           {option}
                           {option === question.answer && (
-                            <span className="ml-2 text-green-600 text-sm font-medium">
+                            <span className="ml-2 text-green-600 text-sm font-medium dark:text-green-200">
                               (Correct)
                             </span>
                           )}
                           {option === userAnswers[question.id] &&
                             option !== question.answer && (
-                              <span className="ml-2 text-red-600 text-sm font-medium">
+                              <span className="ml-2 text-red-600 dark:text-red-200 text-sm font-medium">
                                 (Wrong)
                               </span>
                             )}
