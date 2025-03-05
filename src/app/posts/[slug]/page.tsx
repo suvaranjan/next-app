@@ -39,27 +39,38 @@ export default async function PostLayout({
   if (!post) throw new Error(`Post not found for slug: ${resolvedParams.slug}`);
 
   return (
-    <main className="container max-w-4xl py-10 px-4 mx-auto">
-      <PostSearch />
+    <main
+      className="py-10 px-6 mx-auto 
+      bg-[#FAF3E0] dark:bg-[#1E1B16] shadow-xl 
+      text-gray-900 dark:text-gray-100 leading-relaxed"
+    >
+      <div className="container max-w-4xl mx-auto">
+        <PostSearch />
 
-      <article className="prose prose-slate dark:prose-invert lg:prose-lg mx-auto">
-        <div className="mb-8 space-y-4">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <CalendarIcon className="h-4 w-4" />
-            <time dateTime={post.date} className="text-sm">
-              Last updated on {format(parseISO(post.date), "MMMM d, yyyy")}
-            </time>
+        <article className="prose prose-slate dark:prose-invert lg:prose-lg mx-auto">
+          <div className="mb-8 space-y-4">
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <CalendarIcon className="h-4 w-4" />
+              <time dateTime={post.date} className="text-sm">
+                Last updated on {format(parseISO(post.date), "MMMM d, yyyy")}
+              </time>
+            </div>
+
+            <h1 className="text-3xl font-bold tracking-tight text-foreground mb-4">
+              {post.title}
+            </h1>
           </div>
 
-          <h1 className="text-3xl font-bold tracking-tight text-foreground mb-4">
-            {post.title}
-          </h1>
-        </div>
-
-        <div className="prose prose-xs dark:prose-invert max-w-none font-sans">
-          <MDXContent code={post.body.code} />
-        </div>
-      </article>
+          <div
+            className="prose prose-xs dark:prose-invert max-w-none
+            bg-[#FFF8E7] dark:bg-[#2A241E] px-6 py-4 rounded-lg shadow-lg border 
+            border-[#E0D6C8] dark:border-[#3E362E] text-gray-900 dark:text-gray-200 
+            leading-relaxed transition-all duration-300"
+          >
+            <MDXContent code={post.body.code} />
+          </div>
+        </article>
+      </div>
     </main>
   );
 }
