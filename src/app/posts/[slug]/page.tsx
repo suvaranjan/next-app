@@ -7,20 +7,39 @@ import { PostSearch } from "@/components/post-search";
 export const generateStaticParams = async () =>
   allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
 
-export const generateMetadata = ({ params }: { params: { slug: string } }) => {
-  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
-  if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) => {
+  const resolvedParams = await params; // Resolve the Promise
+
+  const post = allPosts.find(
+    (post) => post._raw.flattenedPath === resolvedParams.slug
+  );
+  if (!post) throw new Error(`Post not found for slug: ${resolvedParams.slug}`);
+
   return { title: post.title };
 };
 
-// Remove the Props type and use the correct parameter type directly
-export default function PostLayout({ params }: { params: { slug: string } }) {
-  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
-  if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
+export default async function PostLayout({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const resolvedParams = await params; // Resolve the Promise
+
+  if (!resolvedParams || !resolvedParams.slug) {
+    throw new Error("Invalid params: Missing slug.");
+  }
+
+  const post = allPosts.find(
+    (post) => post._raw.flattenedPath === resolvedParams.slug
+  );
+  if (!post) throw new Error(`Post not found for slug: ${resolvedParams.slug}`);
 
   return (
     <main className="container max-w-4xl py-10 px-4 mx-auto">
-      {/* Add search bar at the top */}
       <PostSearch />
 
       <article className="prose prose-slate dark:prose-invert lg:prose-lg mx-auto">
