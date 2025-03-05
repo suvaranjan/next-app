@@ -5,16 +5,13 @@ import { CalendarIcon } from "lucide-react";
 import { allPosts } from ".contentlayer/generated";
 import { PostSearch } from "@/components/post-search";
 
-export const generateStaticParams = async () =>
-  allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
-
-export const generateMetadata = ({ params }: { params: { slug: string } }) => {
-  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
-  if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
-  return { title: post.title };
+// Update the type definition to match Next.js 15 requirements
+type Props = {
+  params: { slug: string };
+  searchParams?: Record<string, string | string[] | undefined>;
 };
 
-const PostLayout = ({ params }: { params: { slug: string } }) => {
+const PostLayout = ({ params }: Props) => {
   const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
   if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
 
@@ -46,3 +43,9 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
 };
 
 export default PostLayout;
+
+export const generateMetadata = ({ params }: { params: { slug: string } }) => {
+  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+  if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
+  return { title: post.title };
+};
