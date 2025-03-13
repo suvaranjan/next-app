@@ -43,10 +43,10 @@ export default function PDFViewer({ url, title }: PDFViewerProps) {
   }
 
   return (
-    <div className="flex flex-col items-center my-8 border rounded-lg p-4 bg-card">
-      {title && <h3 className="text-xl font-semibold mb-4">{title}</h3>}
+    <div className="flex flex-col items-center my-8 border rounded-lg bg-card">
+      {title && <h3 className="text-xl font-semibold mt-2 mb-2">{title}</h3>}
 
-      <div className="w-full h-[100vh] border rounded-md bg-white">
+      <div className="w-full h-[100vh] bg-white">
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
           <Viewer
             fileUrl={url}
