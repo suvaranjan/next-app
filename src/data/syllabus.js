@@ -20,7 +20,7 @@ export const syllabus = [
       {
         name: "भोला राम का जीव",
         slug: "/posts/bholeram-ka-jeev",
-        bookSlug: null,
+        bookSlug: "/book/bholaram-ka-jeev",
       },
     ],
   },

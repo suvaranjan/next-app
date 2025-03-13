@@ -47,7 +47,9 @@ export default function ReadingForm() {
       if (selectedTopic?.bookSlug) {
         router.push(selectedTopic.bookSlug); // Use bookSlug if available
       } else {
-        toast.error("Book link not available for this topic.");
+        console.log("Book not found");
+
+        toast.error(`This Book is not available`);
       }
     } else {
       setReadingMode(readingStyle);

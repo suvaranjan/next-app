@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Palanquin } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/others/navbar";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +37,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${palanquin.variable}antialiased`}
       >
         <Navbar />
-        {children}
+        <main>{children}</main>
+        <Toaster position="top-center" />
       </body>
     </html>
   );
