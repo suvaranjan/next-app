@@ -5,18 +5,22 @@ export const syllabus = [
       {
         name: "बनाम लार्ड कर्ज़न",
         slug: "/posts/banam-lord-curzon",
+        bookSlug: null,
       },
       {
         name: "क्रोध",
         slug: "/posts/krodh",
+        bookSlug: "/book/krodh",
       },
       {
         name: "अशोक के फूल",
         slug: "/posts/ashok-ke-phool",
+        bookSlug: null,
       },
       {
         name: "भोला राम का जीव",
         slug: "/posts/bholeram-ka-jeev",
+        bookSlug: null,
       },
     ],
   },
@@ -26,6 +30,7 @@ export const syllabus = [
       {
         name: "कर्मभूमि",
         slug: "/posts/karmabhoomi",
+        bookSlug: "/book/karmabhoomi",
       },
     ],
   },

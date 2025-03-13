@@ -1,6 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
+import { syllabus } from "@/data/syllabus";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,17 +25,12 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import MCQReader from "@/components/others/mcq-reader";
-import { toast } from "sonner";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { syllabus } from "@/data/syllabus";
 
 export default function ReadingForm() {
   const [subject, setSubject] = useState("");
   const [topic, setTopic] = useState("");
   const [readingStyle, setReadingStyle] = useState("");
-  const [readingMode, setReadingMode] = useState("form"); // form, mcq, summary
+  const [readingMode, setReadingMode] = useState("form"); // form, mcq, summary, book
   const router = useRouter();
 
   const handleRead = () => {
@@ -38,9 +39,16 @@ export default function ReadingForm() {
       return;
     }
 
+    const selectedTopic = getTopicOptions().find((t) => t.value === topic);
+
     if (readingStyle === "summary") {
-      const selectedTopic = getTopicOptions().find((t) => t.value === topic);
       if (selectedTopic) router.push(selectedTopic.slug);
+    } else if (readingStyle === "book") {
+      if (selectedTopic?.bookSlug) {
+        router.push(selectedTopic.bookSlug); // Use bookSlug if available
+      } else {
+        toast.error("Book link not available for this topic.");
+      }
     } else {
       setReadingMode(readingStyle);
     }
@@ -57,6 +65,7 @@ export default function ReadingForm() {
           value: t.name,
           label: t.name,
           slug: t.slug,
+          bookSlug: t.bookSlug, // Ensure bookSlug is included
         }))
       : [];
   };
@@ -135,6 +144,7 @@ export default function ReadingForm() {
               <SelectContent>
                 <SelectItem value="mcq">MCQ</SelectItem>
                 <SelectItem value="summary">Summary</SelectItem>
+                <SelectItem value="book">Book</SelectItem>
               </SelectContent>
             </Select>
           </div>
