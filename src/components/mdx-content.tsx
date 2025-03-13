@@ -3,10 +3,11 @@
 import type React from "react";
 import { useMDXComponent } from "next-contentlayer2/hooks";
 import Image from "next/image";
+import PDFViewer from "@/components/others/pdf-viewer";
 
 const components = {
   Image,
-  // Headings
+  PDFViewer: PDFViewer,
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1 className={`mt-8 mb-4 text-3xl font-bold ${className}`} {...props} />
   ),

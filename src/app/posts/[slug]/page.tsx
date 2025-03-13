@@ -41,14 +41,16 @@ export default async function PostLayout({
   return (
     <main
       className="py-10 px-6 mx-auto 
-      bg-[#FAF3E0] dark:bg-[#1E1B16] shadow-xl 
-      text-gray-900 dark:text-gray-100 leading-relaxed"
+       shadow-xl 
+      text-gray-900 dark:text-gray-100 leading-relaxed
+      "
+      // bg-[#FAF3E0] dark:bg-[#1E1B16]
     >
       <div className="container max-w-4xl mx-auto">
         <PostSearch />
 
         <article className="prose prose-slate dark:prose-invert lg:prose-lg mx-auto">
-          <div className="mb-8 space-y-4">
+          <div className="mb-5 space-y-4">
             <div className="flex items-center gap-2 text-muted-foreground">
               <CalendarIcon className="h-4 w-4" />
               <time dateTime={post.date} className="text-sm">
@@ -62,10 +64,10 @@ export default async function PostLayout({
           </div>
 
           <div
-            className="prose prose-xs dark:prose-invert max-w-none
-            bg-[#FFF8E7] dark:bg-[#2A241E] px-6 py-4 rounded-lg shadow-lg border 
-            border-[#E0D6C8] dark:border-[#3E362E] text-gray-900 dark:text-gray-200 
-            leading-relaxed transition-all duration-300"
+          // className="prose prose-xs dark:prose-invert max-w-none
+          // bg-[#FFF8E7] dark:bg-[#2A241E] px-6 py-4 rounded-lg shadow-lg border
+          // border-[#E0D6C8] dark:border-[#3E362E] text-gray-900 dark:text-gray-200
+          // leading-relaxed transition-all duration-300"
           >
             <MDXContent code={post.body.code} />
           </div>
