@@ -47,7 +47,7 @@ export default function PDFViewer({ url, title }: PDFViewerProps) {
       {title && <h3 className="text-xl font-semibold mb-4">{title}</h3>}
 
       <div className="w-full h-[100vh] border rounded-md bg-white">
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
           <Viewer
             fileUrl={url}
             plugins={[
